@@ -15,7 +15,16 @@ class HashTableLinearProbing {
     this.toStrFn = toStrFn;
     this.table = {};
   }
-
+  // 比loselose稍好的散列函数
+  djb2HashCode(key) {
+    const tableKey = this.toStrFn(key);
+    let hash = 5381;
+    for (let i = 0; i < tableKey.length; i++) {
+      hash = (hash * 33) + tableKey.charCodeAt(i);
+    }
+    return hash % 1013;
+  }
+  // 散列函数
   loseloseHashCode(key) {
     if (typeof key === 'number') {
       return key
