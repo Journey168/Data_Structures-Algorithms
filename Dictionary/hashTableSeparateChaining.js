@@ -25,7 +25,7 @@ class HashTableSeparateChaining {
       hash = (hash * 33) + tableKey.charCodeAt(i);
     }
     return hash % 1013;
-  }
+  }      
   // 散列函数
   loseloseHashCode(key) {
     if (typeof key === 'number') {
