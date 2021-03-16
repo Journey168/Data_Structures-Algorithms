@@ -1,6 +1,6 @@
 // @ts-check
 
-export default class Queue {
+class Queue {
   constructor() {
     this.count = 0;
     this.lowestCount = 0;
@@ -54,3 +54,5 @@ export default class Queue {
     return objString;
   }
 }
+
+module.exports = Queue

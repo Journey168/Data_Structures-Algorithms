@@ -1,4 +1,5 @@
-import { defaultToString } from '../util'
+
+const  { defaultToString } = require('../util') 
 
 
 class ValuePari {
@@ -11,7 +12,7 @@ class ValuePari {
   }
 }
 
-export default class Dictionary {
+class Dictionary {
   constructor(toStrFn = defaultToString) {
     this.toStrFn = toStrFn
     this.table = {};
@@ -89,3 +90,5 @@ export default class Dictionary {
     return objString;
   }
 }
+
+module.exports = Dictionary

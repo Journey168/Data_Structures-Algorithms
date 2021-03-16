@@ -1,8 +1,8 @@
-export function defaultEquals(a,b) {
+function defaultEquals(a,b) {
   return a===b
 }
 
-export function defaultToString(item){
+function defaultToString(item){
   if(item===null){
     return 'NULL'
   }else if(item===undefined){
@@ -13,13 +13,19 @@ export function defaultToString(item){
   return item.toString()
 }
 
-export const Compare = {
+const Compare = {
   LESS_THAN: -1,
   BIGGER_THAN: 1
 };
-export function defaultCompare(a, b) {
+function defaultCompare(a, b) {
   if (a === b) {
     return 0;
   }
   return a < b ? Compare.LESS_THAN : Compare.BIGGER_THAN;
 }
+
+
+exports.defaultEquals = defaultEquals
+exports.defaultToString = defaultToString
+exports.defaultCompare = defaultCompare
+exports.Compare = Compare
