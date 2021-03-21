@@ -64,6 +64,84 @@ const dethFirstSearchVisit = (u, color, adjList, callback) => {
 }
 
 const printVertex = value => {
-  console.log('Visited vertex',value)
+  console.log('Visited vertex', value)
 }
-dethFirstSearch(graph,printVertex)
+dethFirstSearch(graph, printVertex)
+
+
+
+// 深度优先算法  获取发现时间和完成探索时间
+const DFS = (graph) => {
+  const vertices = graph.getVertices(),
+    adjList = graph.getAdjList(),
+    color = initializeColor(vertices),
+    d = {},
+    f = {},
+    p = {},
+    time = { count: 0 };
+
+  for (let i = 0; i < vertices.length; i++) {
+    f[vertices[i]] = 0
+    d[vertices[i]] = 0
+    p[vertices[i]] = null
+  }
+
+  for (let i = 0; i < vertices.length; i++) {
+    if (color[vertices[i]] === Colors.WHITE) {
+      DFSVisit(vertices[i], color, d, f, p, time, adjList)
+    }
+  }
+
+  return {
+    discovery: d,
+    finished: f,
+    predecessors: p
+  }
+}
+
+const DFSVisit = (u, color, d, f, p, time, adjList) => {
+  color[u] = Colors.GREY
+  d[u] = ++time.count;
+  const neighbors = adjList.get(u)
+  for (let i = 0; i < neighbors.length; i++) {
+    const w = neighbors[i]
+    if (color[w] === Colors.WHITE) {
+      p[w] = u
+      DFSVisit(w, color, d, f, p, time, adjList)
+    }
+  }
+  color[u] = Colors.BLACK;
+  f[u] = ++time.count
+}
+
+// 利用改进后的深度优先算法  应用于拓扑排序 编排一些顺序任务
+const graph1 = new Graph(true)
+const myVertices1 = ['A', 'B', 'C', 'D', 'E', 'F']
+for (let i = 0; i < myVertices1.length; i++) {
+  graph1.addVertex(myVertices1[i])
+}
+graph1.addEdge('A', 'C')
+graph1.addEdge('A', 'D')
+graph1.addEdge('B', 'D')
+graph1.addEdge('B', 'E')
+graph1.addEdge('C', 'F')
+graph1.addEdge('F', 'E')
+const result = DFS(graph1)
+const fTimes = result.finished
+let s = ''
+
+for (let count = 0; count < myVertices1.length; count++) {
+  let max = 0,
+    maxName = null;
+
+  for (let i = 0; i < myVertices1.length; i++) {
+    if (fTimes[myVertices1[i]] > max) {
+      max = fTimes[myVertices1[i]]
+      maxName = myVertices1[i]
+    }
+  }
+  s = s ? s + ' - ' + maxName : s + maxName
+  delete fTimes[maxName]
+}
+
+console.log(s)
